@@ -2,4 +2,4 @@ project: libwebm
 target: webm2ts
 
 cmds:
-	- cmd: /webm2ts
+ - cmd: /webm2ts
