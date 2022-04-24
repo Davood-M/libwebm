@@ -9,7 +9,7 @@ WORKDIR /libwebm
 # RUN rm -rf build
 # RUN mkdir build
 WORKDIR build 
-RUN rm CMakeCache.txt
+# RUN rm CMakeCache.txt
 # RUN make clean
 RUN CC=clang CXX=clang++ cmake ..
 RUN make
