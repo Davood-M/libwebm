@@ -315,6 +315,12 @@ set(webm2pes_tests_sources
     "${LIBWEBM_SRC_DIR}/m2ts/tests/webm2pes_tests.cc")
 set(webm2ts_sources "${LIBWEBM_SRC_DIR}/m2ts/vpxpes2ts_main.cc")
 
+if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	message(FATAL_ERROR "Clang is required!")
+endif()
+# target_compile_options(webm2ts PUBLIC -fsanitize=fuzzer)
+# target_link_options(webm2ts PUBLIC -fsanitize=fuzzer)
+
 set(webvtt_common_sources
     "${LIBWEBM_SRC_DIR}/webvtt/vttreader.cc"
     "${LIBWEBM_SRC_DIR}/webvtt/vttreader.h"
@@ -376,10 +382,15 @@ if (ENABLE_WEBMTS)
   add_library(webmts OBJECT ${webmts_sources})
 
   add_executable(webm2pes ${webm2pes_sources} $<TARGET_OBJECTS:webmts>)
+  # target_compile_options(webm2pes PUBLIC -fsanitize=fuzzer)
+  # target_link_options(webm2pes PUBLIC -fsanitize=fuzzer)
   target_link_libraries(webm2pes LINK_PUBLIC webm)
-
+  
   add_executable(webm2ts ${webm2ts_sources} $<TARGET_OBJECTS:webmts>)
+  
   target_link_libraries(webm2ts LINK_PUBLIC webm)
+  target_compile_options(webm2ts PUBLIC -fsanitize=fuzzer)
+  target_link_options(webm2ts PUBLIC -fsanitize=fuzzer)
 endif ()
 
 if (ENABLE_TESTS)

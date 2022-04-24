@@ -10,6 +10,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <iostream>
 
 namespace {
 
@@ -18,7 +19,8 @@ void Usage(const char* argv[]) {
 }
 
 }  // namespace
-
+	
+/*
 int main(int argc, const char* argv[]) {
   if (argc < 3) {
     Usage(argv);
@@ -30,4 +32,12 @@ int main(int argc, const char* argv[]) {
 
   libwebm::VpxPes2Ts converter(input_path, output_path);
   return converter.ConvertToFile() == true ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+*/
+
+extern "C" int LLVMFuzzerTestOneInput(char *data, size_t size) {
+	// call the function
+	libwebm::VpxPes2Ts converter(data, "/dev/null");
+	// std::cout << "OK";
+	return 0;
 }
